@@ -12,7 +12,7 @@ public class GameManager : MonoSingleton<GameManager>
     [SerializeField] private GameObject youWin;
     [SerializeField] private GameObject youLose;
     [SerializeField] private float spawnEnemyInterval; //Use this to implement spawn enemy interval
-    private float i;
+    private float enemyTimer;
     
     
     private bool gameIsOver;
@@ -20,7 +20,7 @@ public class GameManager : MonoSingleton<GameManager>
 
     private void Start()
     {
-        i = spawnEnemyInterval;
+        enemyTimer = spawnEnemyInterval;
         gameIsOver = false;
         youWin.SetActive(false);
         youLose.SetActive(false);
@@ -33,20 +33,14 @@ public class GameManager : MonoSingleton<GameManager>
 
     private void CountdownSpawn()
     {
+        if (gameIsOver) return;
         int xRandom = Random.Range(0, OOPMapGenerator.Instance.MapData.GetLength(0));
         int yRandom = Random.Range(0, OOPMapGenerator.Instance.MapData.GetLength(1));
-        
-        if (spawnEnemyInterval > 0)
-        {
-            i -= Time.deltaTime;
-
-            if (i <= 0)
-            {
-                OOPMapGenerator.Instance.PlaceEnemy(xRandom, yRandom);
-                i = spawnEnemyInterval;
-            }
-
-        }        
+        if (spawnEnemyInterval <= 0) return;
+        enemyTimer -= Time.deltaTime;
+        if (enemyTimer > 0) return;
+        OOPMapGenerator.Instance.PlaceEnemy(xRandom, yRandom);
+        enemyTimer = spawnEnemyInterval;
     }
 
     public void Lose()
