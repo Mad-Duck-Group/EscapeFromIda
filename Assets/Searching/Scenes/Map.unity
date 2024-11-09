@@ -880,6 +880,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   youWin: {fileID: 615354456}
   youLose: {fileID: 1408481570}
+  spawnEnemyInterval: 10
 --- !u!4 &1814863256
 Transform:
   m_ObjectHideFlags: 0
