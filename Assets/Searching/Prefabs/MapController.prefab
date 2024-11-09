@@ -141,12 +141,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1ea12672d43a5547bca6d7ccbe75775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  X: 8
-  Y: 8
+  randomMap: 1
+  randomMapWidthRange: {x: 10, y: 15}
+  randomMapHeightRange: {x: 10, y: 15}
+  width: 10
+  height: 10
+  randomTerrain: 1
+  randomTerrainRange: {x: 5, y: 6}
+  byColumn: 1
+  columnSplit: 0
+  rowSplit: 0
   player: {fileID: 0}
   playerStartPos: {x: 0, y: 0}
-  Exit: {fileID: 0}
-  floorsPrefab:
+  exit: {fileID: 0}
+  floorsPrefabTerrain1:
   - {fileID: 106160, guid: 038998774947c4a8fa170d5b4492a7dd, type: 3}
   - {fileID: 137908, guid: 41775b29042354678bcd58bb1a75871e, type: 3}
   - {fileID: 125636, guid: 74398dca0c1f64f34aab8ba7bdb6c527, type: 3}
@@ -155,6 +163,15 @@ MonoBehaviour:
   - {fileID: 127736, guid: 4cdf8ac85eff446d0a8fefbdc8c6569f, type: 3}
   - {fileID: 110520, guid: 5535fd6cd705e4a79a1d5a4f114de5dc, type: 3}
   - {fileID: 110520, guid: c18e9692903814865aa9a855aaa66df5, type: 3}
+  floorsPrefabTerrain2:
+  - {fileID: 106160, guid: ea668c2ff20e547418ca9910033c779c, type: 3}
+  - {fileID: 137908, guid: ad78cbd0a9eb2d546badaf5f367f5617, type: 3}
+  - {fileID: 125636, guid: 61ff0c00ebf018841981010955d88079, type: 3}
+  - {fileID: 177044, guid: 627df5ac7ddc0fa4b82a10bffa2dc282, type: 3}
+  - {fileID: 109612, guid: 6f04efba42043ad47a7b655025045a19, type: 3}
+  - {fileID: 127736, guid: aafefe00541794e4cb3205327353c209, type: 3}
+  - {fileID: 110520, guid: e013774d03ce7d744bdfaa858b59bc19, type: 3}
+  - {fileID: 110520, guid: d673b490522b63447a90d63a6f2773b1, type: 3}
   wallsPrefab:
   - {fileID: 110520, guid: b1361c167057d93419e387f0e521b453, type: 3}
   - {fileID: 110520, guid: 160d1ca5bdb308248a5ee74ad266bb23, type: 3}
@@ -167,33 +184,32 @@ MonoBehaviour:
   demonWallsPrefab:
   - {fileID: 110520, guid: a0e1cbb2ed4ebe2438ddc619ee2fef83, type: 3}
   - {fileID: 110520, guid: 0c33ad76486a7d9468826fa09c7942d0, type: 3}
-  itemsPrefab:
-  - {fileID: 6476303242912763235, guid: 86926da40248a04478456d108c6fae6d, type: 3}
-  - {fileID: 6476303242912763235, guid: 76f2f38c664723b42aea03f157bcc7ae, type: 3}
-  keysPrefab:
-  - {fileID: 1125293129051393862, guid: 00444c8a163332f46b6e50904ed9a7ab, type: 3}
   enemiesPrefab:
   - {fileID: 110520, guid: 2a26a0f7e63d0404389b667e79c6911a, type: 3}
-  fireStormPrefab:
-  - {fileID: 3589931770580008107, guid: 348040bcbec648a42968b339c2112920, type: 3}
+  potionData:
+    item: {fileID: 1124356193795777934, guid: 76f2f38c664723b42aea03f157bcc7ae, type: 3}
+    count: 3
+  keyData:
+    item: {fileID: 1907674792659833117, guid: 00444c8a163332f46b6e50904ed9a7ab, type: 3}
+    count: 1
+  fireStormData:
+    item: {fileID: 4113991319460823854, guid: 348040bcbec648a42968b339c2112920, type: 3}
+    count: 2
+  wallTileData:
+    tile: {fileID: -4749328501910396542, guid: 84c7210ad7a34e047836b93abbcea8e3, type: 3}
+    count: 2
+  barbWallTileData:
+    tile: {fileID: 941210640559723525, guid: 8b6fd07b044775a41a8a7f376022333a, type: 3}
+    count: 2
+  iceTileData:
+    tile: {fileID: -8784525605365354536, guid: a33b861d841008645844431386de6b29, type: 3}
+    count: 2
   floorParent: {fileID: 2017854439703414493}
   wallParent: {fileID: 5733433177445407064}
-  itemPotionParent: {fileID: 962238967185088404}
+  itemParent: {fileID: 962238967185088404}
   enemyParent: {fileID: 6481837019810891414}
-  obsatcleCount: 1
-  itemPotionCount: 5
-  itemKeyCount: 1
-  itemFireStormCount: 2
+  demonWallCount: 1
   enemyCount: 1
-  playerBlock: 99
-  empty: 0
-  demonWall: 1
-  potion: 2
-  bonuesPotion: 3
-  exit: 4
-  key: 5
-  enemy: 6
-  fireStorm: 7
 --- !u!1 &7680843978735096706
 GameObject:
   m_ObjectHideFlags: 0

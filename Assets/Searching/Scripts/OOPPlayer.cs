@@ -80,7 +80,7 @@ namespace Searching
         public OOPEnemy[] SortEnemiesByRemainningEnergy1()
         {
             // do selection sort of enemy's energy
-            var enemies = mapGenerator.GetEnemies();
+            var enemies =  OOPMapGenerator.Instance.GetEnemies();
             for (int i = 0; i < enemies.Length - 1; i++)
             {
                 int minIndex = i;
@@ -100,7 +100,7 @@ namespace Searching
 
         public OOPEnemy[] SortEnemiesByRemainningEnergy2()
         {
-            var enemies = mapGenerator.GetEnemies();
+            var enemies =  OOPMapGenerator.Instance.GetEnemies();
             Array.Sort(enemies, (a, b) => a.energy.CompareTo(b.energy));
             return enemies;
         }

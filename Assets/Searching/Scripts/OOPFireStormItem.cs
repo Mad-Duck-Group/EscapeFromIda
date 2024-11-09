@@ -5,13 +5,13 @@ using UnityEngine;
 namespace Searching
 {
 
-    public class OOPFireStormItem : Identity
+    public class OOPFireStormItem : Item
     {
-        public override void Hit()
+        public override void OnHit()
         {
-            mapGenerator.player.inventory.AddItem("FireStorm");
-            mapGenerator.fireStorms[positionX, positionY] = null;
-            mapGenerator.mapdata[positionX, positionY] = mapGenerator.empty;
+            OOPMapGenerator.Instance.Player.inventory.AddItem("FireStorm");
+            OOPMapGenerator.Instance.Items[positionX, positionY] = null;
+            OOPMapGenerator.Instance.MapData[positionX, positionY] = BlockTypes.Empty;
             Destroy(gameObject);
         }
     }

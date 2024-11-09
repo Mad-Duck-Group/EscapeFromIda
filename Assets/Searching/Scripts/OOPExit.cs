@@ -9,15 +9,14 @@ namespace Searching
     public class OOPExit : Identity
     {
         public string unlockKey;
-        public GameObject YouWin;
 
         public override void Hit()
         {
-            if (mapGenerator.player.inventory.numberOfItem(unlockKey) > 0)
+            if (OOPMapGenerator.Instance.Player.inventory.numberOfItem(unlockKey) > 0)
             {
                 Debug.Log("Exit unlocked");
-                mapGenerator.player.enabled = false;
-                YouWin.SetActive(true);
+                OOPMapGenerator.Instance.Player.enabled = false;
+                GameManager.Instance.Win();
                 Debug.Log("You win");
             }
             else

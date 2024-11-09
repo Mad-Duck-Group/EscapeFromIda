@@ -6,14 +6,14 @@ using UnityEngine.UIElements;
 namespace Searching
 {
 
-    public class OOPWall : Identity
+    public class OOPDemonWall : Identity
     {
         public int Damage;
         public bool IsIceWall;
 
         private void Start()
         {
-            IsIceWall = Random.Range(0, 100) < 20 ? true : false;
+            IsIceWall = Random.Range(0, 100) < 50;
             if (IsIceWall)
             {
                 GetComponent<SpriteRenderer>().color = Color.blue;
@@ -23,13 +23,13 @@ namespace Searching
         {
             if (IsIceWall)
             {
-                mapGenerator.player.TakeDamage(Damage, IsIceWall);
+                OOPMapGenerator.Instance.Player.TakeDamage(Damage, IsIceWall, playAnimation: true);
             }
             else
             {
-                mapGenerator.player.TakeDamage(Damage);
+                OOPMapGenerator.Instance.Player.TakeDamage(Damage, playAnimation: true);
             }
-            mapGenerator.mapdata[positionX, positionY] = 0;
+            OOPMapGenerator.Instance.MapData[positionX, positionY] = 0;
             Destroy(gameObject);
         }
     }

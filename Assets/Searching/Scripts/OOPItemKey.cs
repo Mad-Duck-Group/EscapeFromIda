@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using Searching;
 using UnityEngine;
 
-public class OOPItemKey : Identity
+public class OOPItemKey : Item
 {
     public string key;
 
-    public override void Hit()
+    public override void OnHit()
     {
-        mapGenerator.player.inventory.AddItem(key);
+        OOPMapGenerator.Instance.Player.inventory.AddItem(key);
         Destroy(gameObject);
     }
 }

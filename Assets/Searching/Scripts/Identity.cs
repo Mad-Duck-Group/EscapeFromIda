@@ -12,8 +12,6 @@ namespace Searching
         public int positionX;
         public int positionY;
 
-        public OOPMapGenerator mapGenerator;
-
         public void PrintInfo()
         {
             Debug.Log("tell me your " + Name);

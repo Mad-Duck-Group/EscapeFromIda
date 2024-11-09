@@ -1,38 +1,40 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Searching
 {
 
-    public class OOPItemPotion : Identity
+    public class OOPItemPotion : Item
     {
         public int healPoint = 10;
-        public bool isBonues;
+        public bool isBonus;
+        public float bonusMultiplier = 2;
 
         private void Start()
         {
-            isBonues = Random.Range(0, 100) < 20 ? true : false;
-            if (isBonues)
+            isBonus = Random.Range(0, 100) < 20;
+            if (isBonus)
             {
                 GetComponent<SpriteRenderer>().color = Color.blue;
             }
         }
-        public override void Hit()
+        public override void OnHit()
         {
-            if (isBonues)
+            if (isBonus)
             {
-                mapGenerator.player.Heal(healPoint, isBonues);
-                Debug.Log("You got " + Name + " Bonues : " + healPoint * 2);
+                OOPMapGenerator.Instance.Player.Heal((int)(healPoint * bonusMultiplier));
+                Debug.Log("You got " + Name + " Bonus : " + healPoint * bonusMultiplier);
             }
             else
             {
-                mapGenerator.player.Heal(healPoint);
+                OOPMapGenerator.Instance.Player.Heal(healPoint);
                 Debug.Log("You got " + Name + " : " + healPoint);
             }
 
 
-            mapGenerator.mapdata[positionX, positionY] = mapGenerator.empty;
+            OOPMapGenerator.Instance.MapData[positionX, positionY] = BlockTypes.Empty;
             Destroy(gameObject);
         }
     }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 namespace Searching
@@ -14,13 +15,13 @@ namespace Searching
 
         public override void Hit()
         {
-            mapGenerator.player.Attack(this);
-            this.Attack(mapGenerator.player);
+            OOPMapGenerator.Instance.Player.Attack(this);
+            Attack( OOPMapGenerator.Instance.Player);
         }
 
         public void Attack(OOPPlayer _player)
         {
-            _player.TakeDamage(AttackPoint);
+            _player.TakeDamage(AttackPoint, playAnimation: true);
         }
 
         protected override void CheckDead()
@@ -28,8 +29,8 @@ namespace Searching
             base.CheckDead();
             if (energy <= 0)
             {
-                mapGenerator.enemies[positionX, positionY] = null;
-                mapGenerator.mapdata[positionX, positionY] = mapGenerator.empty;
+                OOPMapGenerator.Instance.Enemies[positionX, positionY] = null;
+                OOPMapGenerator.Instance.MapData[positionX, positionY] = BlockTypes.Empty;
             }
         }
 
@@ -57,16 +58,12 @@ namespace Searching
                     toX += 1;
                     break;
             }
-            if (!HasPlacement(toX, toY))
-            {
-                mapGenerator.mapdata[positionX, positionY] = mapGenerator.empty;
-                mapGenerator.enemies[positionX, positionY] = null;
-                positionX = toX;
-                positionY = toY;
-                mapGenerator.mapdata[positionX, positionY] = mapGenerator.enemy;
-                mapGenerator.enemies[positionX, positionY] = this;
-                transform.position = new Vector3(positionX, positionY, 0);
-            }
+            if (!IsValid(toX, toY) || HasPlacement(toX, toY)) return;
+            OOPMapGenerator.Instance.MapData[positionX, positionY] = BlockTypes.Empty;
+            OOPMapGenerator.Instance.Enemies[positionX, positionY] = null;
+            MoveTween(new Vector2(toX - positionX, toY - positionY));
+            OOPMapGenerator.Instance.MapData[positionX, positionY] = BlockTypes.Enemy;
+            OOPMapGenerator.Instance.Enemies[positionX, positionY] = this;
         }
     }
 }
