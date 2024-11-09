@@ -39,8 +39,6 @@ public class GameManager : MonoSingleton<GameManager>
         if (spawnEnemyInterval > 0)
         {
             i -= Time.deltaTime;
-            
-            Debug.Log(i);
 
             if (i <= 0)
             {
