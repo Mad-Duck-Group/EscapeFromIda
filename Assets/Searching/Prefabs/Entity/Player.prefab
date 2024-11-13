@@ -50,8 +50,6 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -102,6 +100,8 @@ MonoBehaviour:
   Name: Boy
   positionX: 0
   positionY: 0
-  mapGenerator: {fileID: 0}
   energy: 20
   AttackPoint: 10
+  moveTweenTime: 0.2
+  spriteRenderer: {fileID: 5267956022897430819}
+  inventory: {fileID: 0}

@@ -58,6 +58,7 @@ namespace Searching
                     toX += 1;
                     break;
             }
+            spriteRenderer.flipX = toX >= positionX;
             if (!IsValid(toX, toY) || HasPlacement(toX, toY)) return;
             OOPMapGenerator.Instance.MapData[positionX, positionY] = BlockTypes.Empty;
             OOPMapGenerator.Instance.Enemies[positionX, positionY] = null;

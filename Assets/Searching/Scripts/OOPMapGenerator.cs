@@ -265,7 +265,7 @@ namespace Searching
             player.positionX = playerStartPos.x;
             player.positionY = playerStartPos.y;
             player.transform.position = new Vector3(playerStartPos.x, playerStartPos.y, -0.1f);
-            mapdata[playerStartPos.x, playerStartPos.y] = BlockTypes.PlayerBlock;
+            //mapdata[playerStartPos.x, playerStartPos.y] = BlockTypes.PlayerBlock;
         }
 
         private void GenerateBoundaries()

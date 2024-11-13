@@ -22,13 +22,12 @@ namespace Searching
         protected Tween positionTween;
         protected Tween colorTween;
         protected Color originalColor;
-        protected SpriteRenderer spriteRenderer;
+        [SerializeField] protected SpriteRenderer spriteRenderer;
 
         public Vector2 LastDirection { get; protected set; }
 
         protected void Awake()
         {
-            spriteRenderer = GetComponent<SpriteRenderer>();
             originalColor = spriteRenderer.color;
         }
 
@@ -50,7 +49,7 @@ namespace Searching
             LastDirection = direction;
             int toX = (int)(positionX + direction.x);
             int toY = (int)(positionY + direction.y);
-
+            spriteRenderer.flipX = !(direction.x >= 0);
             if (HasPlacement(toX, toY))
             {
                 if (IsDemonWalls(toX, toY))
@@ -130,7 +129,7 @@ namespace Searching
 
         public bool IsTile(int x, int y)
         {
-            return OOPMapGenerator.Instance.Tiles[x, y];
+            return OOPMapGenerator.Instance.GetTile(x, y);
         }
         public bool IsEnemy(int x, int y)
         {
