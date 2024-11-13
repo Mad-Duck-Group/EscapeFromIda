@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 21210520}
   - component: {fileID: 6133920}
   - component: {fileID: 941210640559723525}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: BarbWallTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
