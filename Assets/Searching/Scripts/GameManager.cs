@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Searching;
+using TMPro;
 using UnityCommunity.UnitySingleton;
 using UnityEngine;
 using UnityEngine.Analytics;
@@ -11,10 +12,10 @@ public class GameManager : MonoSingleton<GameManager>
 {
     [SerializeField] private GameObject youWin;
     [SerializeField] private GameObject youLose;
-    [SerializeField] private float spawnEnemyInterval; //Use this to implement spawn enemy interval
+    [SerializeField] private float spawnEnemyInterval;
+    [SerializeField] private TMP_Text timerText;
+    //Use this to implement spawn enemy interval
     private float enemyTimer;
-    
-    
     private bool gameIsOver;
     public bool GameIsOver => gameIsOver;
 
@@ -29,6 +30,14 @@ public class GameManager : MonoSingleton<GameManager>
     private void Update()
     {
         CountdownSpawn();
+        UpdateTimer();
+    }
+    
+    private void UpdateTimer()
+    {
+        if (gameIsOver) return;
+        float myTime = Time.realtimeSinceStartup;
+        timerText.SetText(myTime.ToString("Time : "+"00:00"));
     }
 
     private void CountdownSpawn()
