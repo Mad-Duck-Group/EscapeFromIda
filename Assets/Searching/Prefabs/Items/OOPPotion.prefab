@@ -189,5 +189,5 @@ MonoBehaviour:
   healPoint: 10
   isBonus: 0
   bonusMultiplier: 2
-  bonusRate: 0.2
+  bonusRate: 0.01
   guaranteedDropCount: 5

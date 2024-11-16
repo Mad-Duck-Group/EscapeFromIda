@@ -13,9 +13,9 @@ namespace Searching
         public float bonusMultiplier = 2;
         
         // USE HERE, I SAD
-        public float bonusRate = 0.2f;
+        public float bonusRate;
         public int guaranteedDropCount;
-        private static int _dropCount;
+        private static int _dropCount = 0;
         // END HERE, BAKA!!!!
 
         private void Start()
@@ -24,13 +24,32 @@ namespace Searching
             if (isBonus)
             {
                 GetComponent<SpriteRenderer>().color = Color.blue;
+                
             }
         }
 
         // DO IT HERE, I SAD
         private void RandomDrop()
         {
+            float bonusPointDrop = Random.Range(0f,1f);
+            if (_dropCount >= guaranteedDropCount - 1)
+            {
+                isBonus = true;
+                _dropCount = 0;
+                return;
+            }
+            if (bonusPointDrop <= bonusRate )
+            {
+                isBonus = true;
+                
+            }
+            else
+            {
+                _dropCount++;
+            }
+
            
+            
         }
         // END HERE, BAKA!!!!
         
