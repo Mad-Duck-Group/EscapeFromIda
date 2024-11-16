@@ -1799,6 +1799,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 2142152727}
+    - target: {fileID: 8365133027701863277, guid: 896fac2834903504f8973b3186300203, type: 3}
+      propertyPath: potionData.count
+      value: 15
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

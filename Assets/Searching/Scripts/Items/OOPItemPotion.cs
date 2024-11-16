@@ -11,15 +11,29 @@ namespace Searching
         public int healPoint = 10;
         public bool isBonus;
         public float bonusMultiplier = 2;
+        
+        // USE HERE, I SAD
+        public float bonusRate = 0.2f;
+        public int guaranteedDropCount;
+        private static int _dropCount;
+        // END HERE, BAKA!!!!
 
         private void Start()
         {
-            isBonus = Random.Range(0, 100) < 20;
+            RandomDrop();
             if (isBonus)
             {
                 GetComponent<SpriteRenderer>().color = Color.blue;
             }
         }
+
+        // DO IT HERE, I SAD
+        private void RandomDrop()
+        {
+           
+        }
+        // END HERE, BAKA!!!!
+        
         public override void OnHit()
         {
             if (isBonus)
@@ -32,8 +46,6 @@ namespace Searching
                 OOPMapGenerator.Instance.Player.Heal(healPoint);
                 Debug.Log("You got " + Name + " : " + healPoint);
             }
-
-
             OOPMapGenerator.Instance.MapData[positionX, positionY] = BlockTypes.Empty;
             Destroy(gameObject);
         }

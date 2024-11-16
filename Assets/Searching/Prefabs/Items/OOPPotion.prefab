@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2677951275212405176}
   - component: {fileID: 6907480482686430088}
-  - component: {fileID: 2722195210556610598}
   m_Layer: 6
   m_Name: OOPPotion
   m_TagString: Untagged
@@ -85,25 +84,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2722195210556610598
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5219784335405844226}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66016a7a304da7440a6c304a005e4d8b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Name: Potion
-  positionX: 0
-  positionY: 0
-  dropRate: 0
-  healPoint: 10
-  isBonus: 0
-  bonusMultiplier: 2
 --- !u!1 &6476303242912763235
 GameObject:
   m_ObjectHideFlags: 0
@@ -209,3 +189,5 @@ MonoBehaviour:
   healPoint: 10
   isBonus: 0
   bonusMultiplier: 2
+  bonusRate: 0.2
+  guaranteedDropCount: 5
