@@ -87,6 +87,8 @@ namespace Searching
 
         private BlockTypes[,] mapdata;
         public BlockTypes[,] MapData => mapdata;
+        public BlockTypes[,] entityData;
+        public BlockTypes[,] EntityData => entityData;
         private TerrainTypes[,] terrains;
         public TerrainTypes[,] Terrains => terrains;
 
@@ -139,6 +141,7 @@ namespace Searching
                 }
             }
             mapdata = new BlockTypes[width, height];
+            entityData = new BlockTypes[width, height];
             tiles = new Tile[width, height];
             items = new Item[width, height];
             enemies = new OOPEnemy[width, height];
@@ -158,8 +161,8 @@ namespace Searching
             };
             GenerateBoundaries();
             InitializePlayer();
-            GenerateDemonWall();
             GenerateEnemy();
+            GenerateDemonWall();
             GenerateTile(tileDictionary);
             GenerateItem(itemDictionary);
             InitializeExit();
@@ -192,7 +195,7 @@ namespace Searching
                 if (GetEmptyCount() < data.count - loop) break;
                 int x = Random.Range(0, width);
                 int y = Random.Range(0, height);
-                if (mapdata[x, y] == BlockTypes.Empty && TerrainMatch(terrains[x, y], data.tile.TerrainType))
+                if (mapdata[x, y] == BlockTypes.Empty && TerrainMatch(terrains[x, y], data.tile.TerrainType) && entityData[x, y] == BlockTypes.Empty)
                 {
                     PlaceTile(x, y, type);
                     loop++;
@@ -221,7 +224,7 @@ namespace Searching
                 if (GetEmptyCount() < count - loop) break;
                 int x = Random.Range(0, width);
                 int y = Random.Range(0, height);
-                if (mapdata[x, y] == BlockTypes.Empty)
+                if (mapdata[x, y] == BlockTypes.Empty && entityData[x, y] == BlockTypes.Empty)
                 {
                     PlaceItem(x, y, type);
                     loop++;
@@ -252,7 +255,7 @@ namespace Searching
                 if (GetEmptyCount() < demonWallCount - count) break;
                 int x = Random.Range(0, width);
                 int y = Random.Range(0, height);
-                if (mapdata[x, y] == BlockTypes.Empty)
+                if (mapdata[x, y] == BlockTypes.Empty && entityData[x, y] == BlockTypes.Empty)
                 {
                     PlaceDemonWall(x, y);
                     count++;
@@ -265,7 +268,7 @@ namespace Searching
             player.positionX = playerStartPos.x;
             player.positionY = playerStartPos.y;
             player.transform.position = new Vector3(playerStartPos.x, playerStartPos.y, -0.1f);
-            //mapdata[playerStartPos.x, playerStartPos.y] = BlockTypes.PlayerBlock;
+            entityData[playerStartPos.x, playerStartPos.y] = BlockTypes.PlayerBlock;
         }
 
         private void GenerateBoundaries()
@@ -321,10 +324,16 @@ namespace Searching
             }
         }
 
-        public BlockTypes GetMapData(float x, float y)
+        public BlockTypes GetMapData(int x, int y)
         {
             if (x >= width || x < 0 || y >= height || y < 0) return BlockTypes.Invalid;
-            return mapdata[(int)x, (int)y];
+            return mapdata[x, y];
+        }
+        
+        public BlockTypes GetEntityData(int x, int y)
+        {
+            if (x >= width || x < 0 || y >= height || y < 0) return BlockTypes.Invalid;
+            return entityData[x, y];
         }
         
         public Tile GetTile(int x, int y)
@@ -349,7 +358,7 @@ namespace Searching
             if (!itemDictionary.ContainsKey(type)) return;
             Item item = Instantiate(itemDictionary[type].item, new Vector3(x, y, 0), Quaternion.identity);
             item.transform.SetParent(itemParent);
-            mapdata[x, y] = BlockTypes.Potion;
+            mapdata[x, y] = type;
             items[x, y] = item;
             items[x, y].positionX = x;
             items[x, y].positionY = y;
@@ -361,7 +370,7 @@ namespace Searching
             int r = Random.Range(0, enemiesPrefab.Length);
             GameObject obj = Instantiate(enemiesPrefab[r], new Vector3(x, y, 0), Quaternion.identity);
             obj.transform.SetParent(enemyParent);
-            mapdata[x, y] = BlockTypes.Enemy;
+            entityData[x, y] = BlockTypes.Enemy;
             enemies[x, y] = obj.GetComponent<OOPEnemy>();
             enemies[x, y].positionX = x;
             enemies[x, y].positionY = y;

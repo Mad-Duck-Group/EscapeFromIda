@@ -50,43 +50,49 @@ namespace Searching
             int toX = (int)(positionX + direction.x);
             int toY = (int)(positionY + direction.y);
             spriteRenderer.flipX = !(direction.x >= 0);
+            bool checkHit = CheckHit(toX, toY);
+            if (checkHit) MoveTween(direction);
+            OOPMapGenerator.Instance.MoveEnemies();
+
+        }
+
+        private bool CheckHit(int toX, int toY, bool activateTile = true)
+        {
+            if (this is not OOPPlayer) return false;
+            if (IsEnemy(toX, toY))
+            {
+                OOPMapGenerator.Instance.Enemies[toX, toY].Hit();
+            }
             if (HasPlacement(toX, toY))
             {
                 if (IsDemonWalls(toX, toY))
                 {
                     OOPMapGenerator.Instance.DemonWalls[toX, toY].Hit();
+                    return false;
                 }
-                else if (IsItem(toX, toY))
+                if (IsItem(toX, toY))
                 {
                     OOPMapGenerator.Instance.Items[toX, toY].OnHit();
-                    MoveTween(direction);
+                    return true;
                 }
-                else if (IsTile(toX, toY))
+                if (IsTile(toX, toY) && activateTile)
                 {
-                    if (!OOPMapGenerator.Instance.Tiles[toX, toY].OnBeforeHit()) return;
+                    if (!OOPMapGenerator.Instance.Tiles[toX, toY].OnBeforeHit()) return false;
                     OOPMapGenerator.Instance.Tiles[toX, toY].OnHit();
-                    if (OOPMapGenerator.Instance.Tiles[toX, toY] is not IceTile)
-                    {
-                        MoveTween(direction);
-                    }
+                    return OOPMapGenerator.Instance.Tiles[toX, toY] is not IceTile;
                 }
-                else if (IsExit(toX, toY))
+                if (IsExit(toX, toY))
                 {
                     OOPMapGenerator.Instance.Exit.Hit();
-                    MoveTween(direction);
-                }
-                else if (IsEnemy(toX, toY))
-                {
-                    OOPMapGenerator.Instance.Enemies[toX, toY].Hit();
+                    return true;
                 }
             }
             else if (IsValid(toX, toY))
             {
-                MoveTween(direction);
                 TakeDamage(1);
+                return true;
             }
-            OOPMapGenerator.Instance.MoveEnemies();
-
+            return false;
         }
         public void MoveTween(Vector2 direction)
         {
@@ -94,14 +100,21 @@ namespace Searching
             int toY = (int)(positionY + direction.y);
             int fromX = positionX;
             int fromY = positionY;
+            if (!IsValid(toX, toY)) return;
+            var tile = OOPMapGenerator.Instance.GetTile(toX, toY);
+            if (this is OOPPlayer && (tile && !tile.CanStepOn)) return;
             positionX = toX;
             positionY = toY;
             if (positionTween.IsActive()) positionTween.Kill();
-            positionTween = transform.DOMove(new Vector3(positionX, positionY, 0), moveTweenTime);
-            // if (this is not OOPPlayer) return;
-            // if (fromX == positionX && fromY == positionY) return;
-            // OOPMapGenerator.Instance.MapData[fromX, fromY] = BlockTypes.Empty;
-            // OOPMapGenerator.Instance.MapData[toX, toY] = BlockTypes.PlayerBlock;
+            positionTween = transform.DOMove(new Vector3(positionX, positionY, 0), moveTweenTime).OnComplete(() => CheckHit(toX, toY, false));
+            if (this is not OOPPlayer) return;
+            if (fromX == positionX && fromY == positionY) return;
+            OOPMapGenerator.Instance.EntityData[fromX, fromY] = BlockTypes.Empty;
+            OOPMapGenerator.Instance.EntityData[toX, toY] = BlockTypes.PlayerBlock;
+            if (OOPMapGenerator.Instance.Tiles[toX, toY] is IceTile)
+            {
+                MoveTween(direction.normalized);
+            }
         }
         
         // hasPlacement คืนค่า true ถ้ามีการวางอะไรไว้บน map ที่ตำแหน่ง x,y
@@ -133,9 +146,16 @@ namespace Searching
         }
         public bool IsEnemy(int x, int y)
         {
-            BlockTypes mapData = OOPMapGenerator.Instance.GetMapData(x, y);
-            return mapData == BlockTypes.Enemy;
+            BlockTypes entityData = OOPMapGenerator.Instance.GetEntityData(x, y);
+            return entityData == BlockTypes.Enemy;
         }
+        
+        public bool IsPlayer(int x, int y)
+        {
+            BlockTypes entityData = OOPMapGenerator.Instance.GetEntityData(x, y);
+            return entityData == BlockTypes.PlayerBlock;
+        }
+        
         public bool IsExit(int x, int y)
         {
             BlockTypes mapData = OOPMapGenerator.Instance.GetMapData(x, y);
@@ -178,7 +198,12 @@ namespace Searching
         {
             if (energy > 0) return;
             if (this is OOPEnemy)
-                Destroy(gameObject);
+            {
+                var sequence = DOTween.Sequence();
+                sequence.Append(transform.DOPunchScale(new Vector3(0.5f, 0.5f, 0), 0.2f));
+                sequence.Join(spriteRenderer.DOColor(Color.red, 0.2f).SetLoops(2, LoopType.Yoyo));
+                sequence.OnComplete(() => Destroy(gameObject));
+            }
             else
             {
                 GameManager.Instance.Lose();

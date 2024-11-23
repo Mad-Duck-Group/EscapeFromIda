@@ -12,11 +12,9 @@ namespace Searching
         public bool isBonus;
         public float bonusMultiplier = 2;
         
-        // USE HERE, I SAD
         public float bonusRate;
         public int guaranteedDropCount;
         private static int _dropCount = 0;
-        // END HERE, BAKA!!!!
 
         private void Start()
         {
@@ -27,8 +25,7 @@ namespace Searching
                 
             }
         }
-
-        // DO IT HERE, I SAD
+        
         private void RandomDrop()
         {
             float bonusPointDrop = Random.Range(0f,1f);
@@ -47,11 +44,8 @@ namespace Searching
             {
                 _dropCount++;
             }
-
-           
-            
         }
-        // END HERE, BAKA!!!!
+      
         
         public override void OnHit()
         {

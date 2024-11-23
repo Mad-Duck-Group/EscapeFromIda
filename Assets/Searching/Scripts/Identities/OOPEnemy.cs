@@ -30,7 +30,7 @@ namespace Searching
             if (energy <= 0)
             {
                 OOPMapGenerator.Instance.Enemies[positionX, positionY] = null;
-                OOPMapGenerator.Instance.MapData[positionX, positionY] = BlockTypes.Empty;
+                OOPMapGenerator.Instance.EntityData[positionX, positionY] = BlockTypes.Empty;
             }
         }
 
@@ -59,11 +59,12 @@ namespace Searching
                     break;
             }
             spriteRenderer.flipX = toX >= positionX;
-            if (!IsValid(toX, toY) || HasPlacement(toX, toY)) return;
-            OOPMapGenerator.Instance.MapData[positionX, positionY] = BlockTypes.Empty;
+            if (!IsValid(toX, toY) || HasPlacement(toX, toY) || IsEnemy(toX, toY)) return;
+            OOPMapGenerator.Instance.EntityData[positionX, positionY] = BlockTypes.Empty;
             OOPMapGenerator.Instance.Enemies[positionX, positionY] = null;
+            if (IsPlayer(toX, toY)) Hit();
             MoveTween(new Vector2(toX - positionX, toY - positionY));
-            OOPMapGenerator.Instance.MapData[positionX, positionY] = BlockTypes.Enemy;
+            OOPMapGenerator.Instance.EntityData[positionX, positionY] = BlockTypes.Enemy;
             OOPMapGenerator.Instance.Enemies[positionX, positionY] = this;
         }
     }

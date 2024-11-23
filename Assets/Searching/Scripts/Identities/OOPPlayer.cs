@@ -90,9 +90,7 @@ namespace Searching
                         minIndex = j;
                     }
                 }
-                var temp = enemies[i];
-                enemies[i] = enemies[minIndex];
-                enemies[minIndex] = temp;
+                (enemies[i], enemies[minIndex]) = (enemies[minIndex], enemies[i]);
             }
             return enemies;
         }

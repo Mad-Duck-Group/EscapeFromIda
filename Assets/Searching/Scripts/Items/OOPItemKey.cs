@@ -10,6 +10,7 @@ public class OOPItemKey : Item
     public override void OnHit()
     {
         OOPMapGenerator.Instance.Player.inventory.AddItem(key);
+        OOPMapGenerator.Instance.MapData[positionX, positionY] = BlockTypes.Empty;
         Destroy(gameObject);
     }
 }
