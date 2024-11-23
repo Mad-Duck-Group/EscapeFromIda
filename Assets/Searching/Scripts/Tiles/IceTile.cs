@@ -50,6 +50,7 @@ public class IceTile : Tile
         if (OOPMapGenerator.Instance.GetTile((int)beforeLastPos.x, (int)beforeLastPos.y) is IceTile)
         {
             OOPMapGenerator.Instance.Player.MoveTween(finalSlipDirection);
+            OOPMapGenerator.Instance.Player.TakeDamage(1);
             return;
         }
         OOPMapGenerator.Instance.Player.Move(finalSlipDirection);

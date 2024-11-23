@@ -14,6 +14,7 @@ namespace Searching
         {
             PrintInfo();
             GetRemainEnergy();
+            GameManager.Instance.UpdateHealth(energy);
         }
 
         public void Update()
@@ -43,6 +44,12 @@ namespace Searching
         public void Attack(OOPEnemy _enemy)
         {
             _enemy.TakeDamage(AttackPoint);
+        }
+        
+        public override void TakeDamage(int damage, bool freeze = false, bool playAnimation = false)
+        {
+            base.TakeDamage(damage, freeze, playAnimation);
+            GameManager.Instance.UpdateHealth(energy);
         }
 
         protected override void CheckDead()

@@ -6,6 +6,7 @@ using TMPro;
 using UnityCommunity.UnitySingleton;
 using UnityEngine;
 using UnityEngine.Analytics;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 public class GameManager : MonoSingleton<GameManager>
@@ -14,6 +15,7 @@ public class GameManager : MonoSingleton<GameManager>
     [SerializeField] private GameObject youLose;
     [SerializeField] private float spawnEnemyInterval;
     [SerializeField] private TMP_Text timerText;
+    [SerializeField] private TMP_Text healthText;
     //Use this to implement spawn enemy interval
     private float enemyTimer;
     private bool gameIsOver;
@@ -33,6 +35,11 @@ public class GameManager : MonoSingleton<GameManager>
         UpdateTimer();
     }
     
+    public void UpdateHealth(int health)
+    {
+        healthText.SetText("HP: " + health);
+    }
+    
     private void UpdateTimer()
     {
         if (gameIsOver) return;
@@ -43,12 +50,12 @@ public class GameManager : MonoSingleton<GameManager>
     private void CountdownSpawn()
     {
         if (gameIsOver) return;
-        int xRandom = Random.Range(0, OOPMapGenerator.Instance.MapData.GetLength(0));
-        int yRandom = Random.Range(0, OOPMapGenerator.Instance.MapData.GetLength(1));
         if (spawnEnemyInterval <= 0) return;
         enemyTimer -= Time.deltaTime;
         if (enemyTimer > 0) return;
-        OOPMapGenerator.Instance.PlaceEnemy(xRandom, yRandom);
+        var randomEmptyTile = OOPMapGenerator.Instance.GetRandomEmpty();
+        if (randomEmptyTile.x == -1 || randomEmptyTile.y == -1) return;
+        OOPMapGenerator.Instance.PlaceEnemy(randomEmptyTile.x, randomEmptyTile.y);
         enemyTimer = spawnEnemyInterval;
     }
 
@@ -62,5 +69,10 @@ public class GameManager : MonoSingleton<GameManager>
     {
         gameIsOver = true;
         youWin.SetActive(true);
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

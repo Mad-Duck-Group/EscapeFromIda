@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using DG.Tweening;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
-using static UnityEditor.PlayerSettings;
-using static UnityEngine.EventSystems.EventTrigger;
 
 namespace Searching
 {
@@ -15,6 +12,7 @@ namespace Searching
         public int energy;
         public int AttackPoint;
         public float moveTweenTime = 0.2f;
+        protected bool isDead;
 
         protected bool isAlive;
         protected bool isFreeze;
@@ -51,7 +49,11 @@ namespace Searching
             int toY = (int)(positionY + direction.y);
             spriteRenderer.flipX = !(direction.x >= 0);
             bool checkHit = CheckHit(toX, toY);
-            if (checkHit) MoveTween(direction);
+            if (checkHit)
+            {
+                MoveTween(direction);
+                TakeDamage(1);
+            }
             OOPMapGenerator.Instance.MoveEnemies();
 
         }
@@ -89,7 +91,6 @@ namespace Searching
             }
             else if (IsValid(toX, toY))
             {
-                TakeDamage(1);
                 return true;
             }
             return false;
@@ -197,6 +198,7 @@ namespace Searching
         protected virtual void CheckDead()
         {
             if (energy > 0) return;
+            isDead = true;
             if (this is OOPEnemy)
             {
                 var sequence = DOTween.Sequence();

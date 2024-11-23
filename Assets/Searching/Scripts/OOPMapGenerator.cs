@@ -352,6 +352,23 @@ namespace Searching
         {
             return mapdata.Cast<BlockTypes>().Count(block => block == BlockTypes.Empty);
         }
+        
+        public (int x, int y) GetRandomEmpty()
+        {
+            List<(int x, int y)> availablePos = new List<(int x, int y)>();
+            for (int x = 0; x < width; x++)
+            {
+                for (int y = 0; y < height; y++)
+                {
+                    if (mapdata[x, y] == BlockTypes.Empty && entityData[x, y] == BlockTypes.Empty)
+                    {
+                        availablePos.Add((x, y));
+                    }
+                }
+            }
+            if (availablePos.Count == 0) return (-1, -1);
+            return availablePos[Random.Range(0, availablePos.Count)];
+        }
 
         public void PlaceItem(int x, int y, BlockTypes type)
         {

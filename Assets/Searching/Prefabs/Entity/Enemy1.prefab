@@ -96,7 +96,7 @@ MonoBehaviour:
   positionX: 0
   positionY: 0
   energy: 4
-  AttackPoint: 0
+  AttackPoint: 5
   moveTweenTime: 0.2
   spriteRenderer: {fileID: 1865922596642462232}
 --- !u!1 &3758466565787608048

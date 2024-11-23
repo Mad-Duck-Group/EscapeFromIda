@@ -36,6 +36,7 @@ namespace Searching
 
         public void RandomMove()
         {
+            if (isDead) return;
             int toX = positionX;
             int toY = positionY;
             int random = Random.Range(0, 4);
