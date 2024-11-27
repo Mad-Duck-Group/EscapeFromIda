@@ -1249,8 +1249,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -100, y: -25}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: -151.53174, y: -25}
+  m_SizeDelta: {x: 303.0634, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1378529132
 MonoBehaviour:
@@ -2473,7 +2473,7 @@ PrefabInstance:
       objectReference: {fileID: 2142152727}
     - target: {fileID: 8365133027701863277, guid: 896fac2834903504f8973b3186300203, type: 3}
       propertyPath: potionData.count
-      value: 15
+      value: 22
       objectReference: {fileID: 0}
     - target: {fileID: 8365133027701863277, guid: 896fac2834903504f8973b3186300203, type: 3}
       propertyPath: iceTileData.count
